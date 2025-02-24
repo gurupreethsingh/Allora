@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+
+import Homepage from "./pages/common_pages/Homepage";
+import Login from "./pages/user_pages/Login";
+import Register from "./pages/user_pages/Register";
+import UserDashboard from "./pages/user_pages/UserDashboard";
+import Header from "./components/header_components/Header";
+import Footer from "./components/header_components/Footer";
+import PageNotFound from "./pages/common_pages/PageNotFound";
+import ContactUs from "./pages/common_pages/ContactUs";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ToastContainer />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Homepage />}></Route>
+          <Route path="/home" element={<Homepage />}></Route>
+          <Route path="/homepage" element={<Homepage />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/user-dashboard" element={<UserDashboard />}></Route>
+          <Route path="/contact-us" element={<ContactUs />}></Route>
+
+          <Route path="/page-not-found" element={<PageNotFound />}></Route>
+          <Route path="/*" element={<PageNotFound />}></Route>
+        </Routes>
+        <Footer />
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

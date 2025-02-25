@@ -12,12 +12,14 @@ import Header from "./components/header_components/Header";
 import Footer from "./components/header_components/Footer";
 import PageNotFound from "./pages/common_pages/PageNotFound";
 import ContactUs from "./pages/common_pages/ContactUs";
+import TopHeader from "./components/header_components/TopHeader";
 
 function App() {
   return (
     <>
       <ToastContainer />
       <Router>
+        <TopHeader />
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />}></Route>

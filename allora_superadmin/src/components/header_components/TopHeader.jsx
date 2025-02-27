@@ -5,7 +5,14 @@ import { CiTwitter } from "react-icons/ci";
 
 const TopHeader = () => {
   return (
-    <div className="text-right shadow-sm">
+    <div className="text-right shadow-sm flex items-center justify-between">
+
+<ul className="nav">
+  <li className="nav-item">
+    <a className="nav-link text-dark font-bold text-2xl" href="/">ALLORA</a>
+  </li>
+
+</ul>
       <ul className="nav justify-content-end items-center ">
   <li className="nav-item">
     <a className="nav-link text-dark"  href="https://www.facebook.com" target="_blank"><CiFacebook className='w-auto h-5' /></a>

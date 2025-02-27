@@ -1,70 +1,110 @@
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from "../../components/common_components/AuthContext";
+import { MdLogin } from "react-icons/md";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import backendGlobalRoute from "../../config/config.js"; // Ensure correct API base URL
+
 export default function Login() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  // Handle form input change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle email-password login
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await axios.post(`${backendGlobalRoute}/api/login`, {
+        ...formData,
+        loginType: "email",
+      });
+
+      const { token, user } = response.data;
+
+      if (token && user) {
+        login(token); // Save token and decode user details in context
+        navigate(`/${user.role}-dashboard/${user._id}`);
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "An error occurred. Please try again."
+      );
+    }
+  };
+
   return (
-    <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-orange-500">
-            Sign in
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                Email address
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-1 border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-                  Password
-                </label>
-                <a href="#" className="text-sm font-semibold text-orange-600 hover:text-indigo-500">
-                  Forgot password?
-                </a>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-1 border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign In
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don't have an account?{' '}
-            <a href="/register" className="font-semibold text-orange-600 hover:text-indigo-500">
-              Sign Up
-            </a>
-          </p>
-        </div>
+    <div className="flex flex-1 flex-col justify-center px-6 lg:px-8 mb-5">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <MdLogin className="mx-auto h-12 w-12 text-gray-600" />
+        <h2 className="text-center text-2xl font-bold tracking-tight text-gray-600">
+          Log in to your account
+        </h2>
       </div>
-    </>
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-base font-medium text-gray-900">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder:text-gray-400"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-base font-medium text-gray-900">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-gray-300 placeholder:text-gray-400"
+            />
+          </div>
+
+          {error && <div className="text-red-600">{error}</div>}
+
+          <button type="submit" className="w-full px-4 py-2 bg-gray-200 rounded">
+            Sign in
+          </button>
+        </form>
+        <p className="mt-10 text-center text-lg text-gray-800">
+          Need an account?{" "}
+          <a
+            href="/register"
+            className="font-semibold text-orange-500 hover:text-black"
+          >
+            Sign Up
+          </a></p>
+      </div>
+    </div>
   );
 }

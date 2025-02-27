@@ -1,88 +1,9 @@
-// export default function Register() {
-//   return (
-//     <>
-//       {/*
-//         This example requires updating your template:
-
-//         ```
-//         <html class="h-full bg-white">
-//         <body class="h-full">
-//         ```
-//       */}
-//       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-//         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-//           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-orange-500">
-//             Sign up
-//           </h2>
-//         </div>
-
-//         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-//           <form action="#" method="POST" className="space-y-6">
-//             <div>
-//               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-//                 Email address
-//               </label>
-//               <div className="mt-2">
-//               <input
-//   id="email"
-//   name="email"
-//   type="email"
-//   required
-//   autoComplete="email"
-//   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-1 border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-// />
-
-//               </div>
-//             </div>
-
-//             <div>
-//               <div className="flex items-center justify-between">
-//                 <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
-//                   Password
-//                 </label>
-//               </div>
-//               <div className="mt-2">
-//                 <input
-//                   id="password"
-//                   name="password"
-//                   type="password"
-//                   required
-//                   autoComplete="current-password"
-//                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border-1 border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-//                 />
-//               </div>
-//             </div>
-
-//             <div>
-//               <button
-//                 type="submit"
-//                 className="flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-//               >
-//                 Sign Up
-//               </button>
-//             </div>
-//           </form>
-
-//           <p className="mt-10 text-center text-sm/6 text-gray-500">
-//             Have an Account?{' '}
-//             <a href="/login" className="font-semibold text-orange-600 hover:text-indigo-500">
-//               Sign In
-//             </a>
-//           </p>
-//         </div>
-//       </div>
-//     </>
-//   )
-// }
-
-
-import { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import backendGlobalRoute from "../../config/config.js" // Ensure this is your API base URL
+import axios from "axios";
+import { FaUserPlus } from "react-icons/fa";
 
 export default function Register() {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -91,184 +12,234 @@ export default function Register() {
     companyAddress: "",
     companyEmail: "",
     gstNumber: "",
-    promotionalConsent: false,
+    registerWithGST: false,
+    promotionalConsent: false, // Promotional consent
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+    }));
   };
 
-  // Handle form submission
+  const validateForm = () => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+    const formErrors = {};
+
+    // Email validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      formErrors.email = "Invalid email format.";
+
+    // Password validation
+    if (!passwordRegex.test(formData.password))
+      formErrors.password = "Password must be strong.";
+
+    // GST-related validation
+    if (formData.registerWithGST && !formData.companyName) {
+      formErrors.companyName = "Company name is required.";
+    }
+
+    if (formData.registerWithGST && !formData.gstNumber) {
+      formErrors.gstNumber = "GST number is required.";
+    }
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    try {
-      const response = await axios.post(`${backendGlobalRoute}/api/register`, formData);
-      setSuccess(response.data.message);
-      setTimeout(() => navigate("/login"), 2000); // Redirect to login after 2 sec
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed. Try again.");
+    if (validateForm()) {
+      try {
+        await axios.post("http://localhost:3001/api/register", formData);
+        alert("Registration Successful. Redirecting to login page.");
+        navigate("/login");
+      } catch (error) {
+        alert("Unable to register");
+      }
     }
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 mb-5">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-orange-500">
-          Sign up
+        <FaUserPlus className="mx-auto h-12 w-12 text-orange-600" />
+        <h2 className="text-center text-2xl font-bold tracking-tight text-orange-600">
+          Create a new account
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name Field */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-900">
-              Full Name
+            <label
+              htmlFor="name"
+              className="block text-base font-medium text-gray-900"
+            >
+              Name
             </label>
-            <div className="mt-2">
-              <input
-                id="name"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-              />
-            </div>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-2 outline-gray-300 focus:outline-maroon-600 sm:text-sm"
+            />
+            {errors.name && (
+              <p className="text-sm text-red-600">{errors.name}</p>
+            )}
           </div>
 
-          {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+            <label
+              htmlFor="email"
+              className="block text-base font-medium text-gray-900"
+            >
               Email address
             </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-              />
-            </div>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-2 outline-gray-300 focus:outline-maroon-600 sm:text-sm"
+            />
+            {errors.email && (
+              <p className="text-sm text-red-600">{errors.email}</p>
+            )}
           </div>
 
-          {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+            <label
+              htmlFor="password"
+              className="block text-base font-medium text-gray-900"
+            >
               Password
             </label>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-              />
-            </div>
-          </div>
-
-          {/* Company Name */}
-          <div>
-            <label htmlFor="companyName" className="block text-sm font-medium text-gray-900">
-              Company Name
-            </label>
-            <div className="mt-2">
-              <input
-                id="companyName"
-                name="companyName"
-                type="text"
-                value={formData.companyName}
-                onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-              />
-            </div>
-          </div>
-
-          {/* Company Address */}
-          <div>
-            <label htmlFor="companyAddress" className="block text-sm font-medium text-gray-900">
-              Company Address
-            </label>
-            <div className="mt-2">
-              <input
-                id="companyAddress"
-                name="companyAddress"
-                type="text"
-                value={formData.companyAddress}
-                onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-              />
-            </div>
-          </div>
-
-          {/* GST Number */}
-          <div>
-            <label htmlFor="gstNumber" className="block text-sm font-medium text-gray-900">
-              GST Number
-            </label>
-            <div className="mt-2">
-              <input
-                id="gstNumber"
-                name="gstNumber"
-                type="text"
-                value={formData.gstNumber}
-                onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 border border-orange-500 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 sm:text-sm"
-              />
-            </div>
-          </div>
-
-          {/* Promotional Consent Checkbox */}
-          <div className="flex items-center">
             <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              value={formData.password}
+              onChange={handleChange}
+              className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-2 outline-gray-300 focus:outline-maroon-600 sm:text-sm"
+            />
+            {errors.password && (
+              <p className="text-sm text-red-600">{errors.password}</p>
+            )}
+          </div>
+
+          <div className="flex items-center mt-4">
+            <input
+              type="checkbox"
+              id="registerWithGST"
+              name="registerWithGST"
+              checked={formData.registerWithGST}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            <label htmlFor="registerWithGST" className="text-gray-900">
+              Register using GST details
+            </label>
+          </div>
+
+          {formData.registerWithGST && (
+            <>
+              <div>
+                <label
+                  htmlFor="companyName"
+                  className="block text-base font-medium text-gray-900"
+                >
+                  Company Name
+                </label>
+                <input
+                  id="companyName"
+                  name="companyName"
+                  type="text"
+                  value={formData.companyName}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-2 outline-gray-300 focus:outline-maroon-600 sm:text-sm"
+                />
+                {errors.companyName && (
+                  <p className="text-sm text-red-600">{errors.companyName}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="companyAddress"
+                  className="block text-base font-medium text-gray-900"
+                >
+                  Company Address
+                </label>
+                <input
+                  id="companyAddress"
+                  name="companyAddress"
+                  type="text"
+                  value={formData.companyAddress}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-2 outline-gray-300 focus:outline-maroon-600 sm:text-sm"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="gstNumber"
+                  className="block text-base font-medium text-gray-900"
+                >
+                  GST Number
+                </label>
+                <input
+                  id="gstNumber"
+                  name="gstNumber"
+                  type="text"
+                  value={formData.gstNumber}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-2 outline-gray-300 focus:outline-maroon-600 sm:text-sm"
+                />
+              </div>
+            </>
+          )}
+
+          <div className="flex items-center mt-4">
+            <input
+              type="checkbox"
               id="promotionalConsent"
               name="promotionalConsent"
-              type="checkbox"
               checked={formData.promotionalConsent}
               onChange={handleChange}
-              className="h-4 w-4 border-orange-500 text-orange-600 focus:ring-orange-500"
+              className="mr-2"
             />
-            <label htmlFor="promotionalConsent" className="ml-2 block text-sm text-gray-900">
-              Receive promotional emails
+            <label htmlFor="promotionalConsent" className="text-gray-900">
+              I agree to receive promotional content.
             </label>
           </div>
 
-          {/* Submit Button */}
-          <div>
+          <div className="flex justify-center">
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-orange-600 px-3 py-1.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="w-full  bg-gray-900 text-light px-4 py-2 rounded font-semibold transition-all duration-200"
             >
               Sign Up
             </button>
           </div>
         </form>
-
-        {/* Success & Error Messages */}
-        {success && <p className="mt-4 text-green-600 text-center">{success}</p>}
-        {error && <p className="mt-4 text-red-600 text-center">{error}</p>}
-
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Have an Account?{" "}
-          <a href="/login" className="font-semibold text-orange-600 hover:text-indigo-500">
-            Sign In
+        <p className="mt-10 text-center text-lg text-gray-800">
+          Already have an account?{" "}
+          <a
+            href="/login"
+            className="font-semibold text-orange-500 hover:text-black"
+          >
+            Sign in
           </a>
         </p>
       </div>

@@ -34,6 +34,25 @@ const sendEmail = (email, subject, message) => {
   });
 };
 
+// helper function to send messages.
+// Initialize Twilio client with environment variables
+const client = twilio(
+  process.env.TWILIO_ACCOUNT_SID,
+  process.env.TWILIO_AUTH_TOKEN
+);
+// Function to send SMS
+const sendSMS = async (phone, message) => {
+  try {
+    const sms = await client.messages.create({
+      body: message,
+      from: process.env.TWILIO_PHONE_NUMBER, // Twilio number
+      to: phone, // Recipient's phone number
+    });
+    console.log("SMS sent with SID: " + sms.sid);
+  } catch (error) {
+    console.error("Error sending SMS:", error.message);
+  }
+};
 
 // Register a new user
 const register = async (req, res) => {
@@ -82,6 +101,10 @@ const register = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
+//updated login code.
 
 const login = async (req, res) => {
   try {

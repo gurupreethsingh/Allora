@@ -31,7 +31,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
 const User = require("../models/UserModel.js");
-const authMiddleware = require("../authMiddleware.js");
+const authMiddleware = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
 

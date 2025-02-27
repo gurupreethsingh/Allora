@@ -6,49 +6,49 @@ const Footer = () => {
 
   
     <div className="flex p-5 justify-evenly bg-gray-700">
-      <ul class="nav flex-column text-center">
-  <li class="nav-item">
-    <a class="nav-link text-light font-bold" href="#">Web Links</a>
+      <ul className="nav flex-column text-center">
+  <li className="nav-item">
+    <a className="nav-link text-light font-bold" href="#">Web Links</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light" href="/">Home</a>
+  <li className="nav-item">
+    <a className="nav-link text-light" href="/">Home</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light" href="/contact-us">Contact</a>
+  <li className="nav-item">
+    <a className="nav-link text-light" href="/contact-us">Contact</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light" href="/about-us">About Us</a>
+  <li className="nav-item">
+    <a className="nav-link text-light" href="/about-us">About Us</a>
   </li>
 
 </ul>
 
-<ul class="nav flex-column text-center">
-  <li class="nav-item">
-    <a class="nav-link text-light font-bold" href="#">Social Links</a>
+<ul className="nav flex-column text-center">
+  <li className="nav-item">
+    <a className="nav-link text-light font-bold" href="#">Social Links</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light" href="https://facebook.com" target="_blank">Facebook</a>
+  <li className="nav-item">
+    <a className="nav-link text-light" href="https://facebook.com" target="_blank">Facebook</a>
   </li>
-  <li class="nav-item">
-  <a class="nav-link text-light" href="https://twitter.com" target="_blank">Twitter</a>
+  <li className="nav-item">
+  <a className="nav-link text-light" href="https://twitter.com" target="_blank">Twitter</a>
   </li>
-  <li class="nav-item">
-  <a class="nav-link text-light" href="https://linkedin.com" target="_blank">LinkedIn</a>
+  <li className="nav-item">
+  <a className="nav-link text-light" href="https://linkedin.com" target="_blank">LinkedIn</a>
   </li>
 </ul>
 
-<ul class="nav flex-column text-center">
-  <li class="nav-item">
-  <a class="nav-link text-light font-bold" href="#">Address</a>
+<ul className="nav flex-column text-center">
+  <li className="nav-item">
+  <a className="nav-link text-light font-bold" href="#">Address</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light" href="#">ECODERS - #198</a>
+  <li className="nav-item">
+    <a className="nav-link text-light" href="#">ECODERS - #198</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light" href="#">Hesaraghatta Road, Bagalgunte</a>
+  <li className="nav-item">
+    <a className="nav-link text-light" href="#">Hesaraghatta Road, Bagalgunte</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link text-light disabled" aria-disabled="true">Bangalore</a>
+  <li className="nav-item">
+    <a className="nav-link text-light disabled" aria-disabled="true">Bangalore</a>
   </li>
 </ul>
     </div>

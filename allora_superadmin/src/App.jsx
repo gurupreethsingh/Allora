@@ -129,7 +129,7 @@ function App() {
           <Route
             path="/vendor-dashboard/:id"
             element={
-              <PrivateRoutes allowedRoles={["superadmin", "outlet"]}>
+              <PrivateRoutes allowedRoles={["superadmin", "vendor"]}>
                 <VendorDashboard />
               </PrivateRoutes>
             }
@@ -138,7 +138,7 @@ function App() {
           <Route
             path="/delivery-dashboard/:id"
             element={
-              <PrivateRoutes allowedRoles={["superadmin", "outlet"]}>
+              <PrivateRoutes allowedRoles={["superadmin", "delivery_agent"]}>
                 <DeliveryPersonDashboard />
               </PrivateRoutes>
             }

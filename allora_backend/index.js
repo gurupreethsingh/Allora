@@ -9,6 +9,7 @@ const fs = require("fs");
 
 //import user routes.
 const userRoutes = require("./routes/UserRoutes");
+const contactRoutes = require("./routes/ContactRoutes");
 
 dotenv.config();
 const app = express();
@@ -16,7 +17,11 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174" ,"http://localhost:5175"], // Replace with your frontend's URL
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "http://localhost:5175",
+    ], // Replace with your frontend's URL
     credentials: true, // Enable credentials
   })
 );
@@ -26,6 +31,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/api", userRoutes);
+app.use("/api", contactRoutes);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -36,7 +42,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/allora")

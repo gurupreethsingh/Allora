@@ -56,7 +56,7 @@ export default function Register() {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post("http://localhost:3001/api/register", formData);
+        await axios.post(`${backendGlobalRoute}/api/register`, formData);
         alert("Registration Successful. Redirecting to login page.");
         navigate("/login");
       } catch (error) {

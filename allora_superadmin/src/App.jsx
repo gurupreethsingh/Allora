@@ -1,21 +1,24 @@
 import { useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./components/common_components/AuthContext";
 import PrivateRoutes from "./components/auth_components/PrivateRoutes";
 
 import Homepage from "./pages/common_pages/Homepage";
-import Login from "./pages/user_pages/Login";
-import Register from "./pages/user_pages/Register";
-import UserDashboard from "./pages/user_pages/UserDashboard";
 import Header from "./components/header_components/Header";
 import Footer from "./components/header_components/Footer";
 import PageNotFound from "./pages/common_pages/PageNotFound";
-import ContactUs from "./pages/common_pages/ContactUs";
+import ContactUs from "./pages/contact_pages/ContactUs";
 import TopHeader from "./components/header_components/TopHeader";
 
+// dashboard pages for all users
 import SuperAdminDashboard from "./pages/superadmin_pages/SuperAdminDashboard";
 import AdminDashboard from "./pages/adminpages/AdminDashboard";
 import EmployeeDashboard from "./pages/employee_pages/EmployeeDashboard";
@@ -24,24 +27,52 @@ import VendorDashboard from "./pages/vendor_pages/VendorDashboard";
 import DeliveryPersonDashboard from "./pages/delivery_person_pages/DeliveryPersonDashboard";
 import AboutUs from "./pages/common_pages/AboutUs";
 
+// user pages.
+import Login from "./pages/user_pages/Login";
+import Register from "./pages/user_pages/Register";
+import UserDashboard from "./pages/user_pages/UserDashboard";
+import ForgotPassword from "./pages/user_pages/ForgotPassword";
+import ResetPassword from "./pages/user_pages/ResetPassword";
+import Profile from "./pages/user_pages/Profile";
+import UpdateProfile from "./pages/user_pages/UpdateProfile";
+import AllUsers from "./pages/user_pages/AllUsers";
+import SingleUser from "./pages/user_pages/SingleUser";
+
+// contact pages.
+import AllMessages from "./pages/contact_pages/AllMessages";
+import ReplyMessage from "./pages/contact_pages/ReplyMessage";
+import AllReplies from "./pages/contact_pages/AllReplies";
+
 // ✅ Function to dynamically update the page title based on the current route
 const TitleUpdater = () => {
   const location = useLocation();
 
   useEffect(() => {
     const getPageTitle = (pathname) => {
-      if (pathname === "/" || pathname === "/home" || pathname === "/homepage") return "Homepage";
+      if (pathname === "/" || pathname === "/home" || pathname === "/homepage")
+        return "Homepage";
       if (pathname === "/contact-us") return "Contact Us";
       if (pathname === "/about-us") return "About Us";
       if (pathname === "/register") return "Register";
       if (pathname === "/login") return "Login";
       if (pathname.startsWith("/user-dashboard/")) return "User Dashboard";
-      if (pathname.startsWith("/superadmin-dashboard/")) return "Superadmin Dashboard";
+      if (pathname.startsWith("/superadmin-dashboard/"))
+        return "Superadmin Dashboard";
       if (pathname.startsWith("/admin-dashboard/")) return "Admin Dashboard";
-      if (pathname.startsWith("/employee-dashboard/")) return "Employee Dashboard";
+      if (pathname.startsWith("/employee-dashboard/"))
+        return "Employee Dashboard";
       if (pathname.startsWith("/outlet-dashboard/")) return "Outlet Dashboard";
       if (pathname.startsWith("/vendor-dashboard/")) return "Vendor Dashboard";
-      if (pathname.startsWith("/delivery-dashboard/")) return "Delivery Dashboard";
+      if (pathname.startsWith("/delivery-dashboard/"))
+        return "Delivery Dashboard";
+      if (pathname.startsWith("/forgot-password/")) return "Forgot Password";
+      if (pathname.startsWith("/reset-password/")) return "Reset Password";
+      if (pathname.startsWith("/profile/")) return "Profile";
+      if (pathname.startsWith("/all-users/")) return "All Users";
+      if (pathname.startsWith("/single-user/")) return "Single User";
+      if (pathname.startsWith("/all-messages/")) return "All Messages";
+      if (pathname.startsWith("/reply-message/")) return "Reply Message";
+      if (pathname.startsWith("/all-replies/")) return "All Replies";
       return "Page Not Found";
     };
 
@@ -59,7 +90,6 @@ function App() {
         <ToastContainer />
         <TopHeader />
         <Header />
-
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Homepage />} />
@@ -143,8 +173,76 @@ function App() {
               </PrivateRoutes>
             }
           />
-        </Routes>
 
+          {/* user pages */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+
+          <Route path="/reset-password" element={<ResetPassword />} />
+
+          <Route
+            path="/profile/:id"
+            element={
+              <PrivateRoutes>
+                <Profile />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/update-profile/:id"
+            element={
+              <PrivateRoutes>
+                <UpdateProfile />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/all-users"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AllUsers />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/single-user/:id"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <SingleUser />
+              </PrivateRoutes>
+            }
+          />
+
+          {/* Contact and message reply routes */}
+
+          <Route
+            path="/all-messages"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AllMessages />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/reply-message/:id"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <ReplyMessage />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/all-replies"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AllReplies />
+              </PrivateRoutes>
+            }
+          />
+        </Routes>
         <Footer />
       </Router>
     </AuthProvider>

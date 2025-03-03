@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 // Create AuthContext
 export const AuthContext = createContext();
@@ -13,15 +14,15 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (token) {
       try {
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const decodedPayload = JSON.parse(atob(base64));
-        setUser(decodedPayload);
+        const decoded = jwtDecode(token); // ✅ Decode token properly
+        setUser(decoded);
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Failed to decode token:", error);
+        localStorage.removeItem("token");
         setUser(null);
         setIsLoggedIn(false);
       }
@@ -37,19 +38,45 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  // ✅ Automatically update Header.jsx when login occurs
+  useEffect(() => {
+    window.addEventListener("storage", syncAuth);
+    return () => window.removeEventListener("storage", syncAuth);
+  }, []);
+
+  const syncAuth = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+        localStorage.removeItem("token");
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+    }
+  };
+
   const login = (token, role = null) => {
     localStorage.setItem("token", token);
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const decodedPayload = JSON.parse(atob(base64));
-    setUser(decodedPayload);
-    setIsLoggedIn(true);
+    window.dispatchEvent(new Event("storage")); // ✅ Force header update
 
-    if (role) {
-      setAuthToken(token);
-      setUserRole(role);
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("userRole", role);
+    try {
+      const decoded = jwtDecode(token);
+      setUser(decoded);
+      setIsLoggedIn(true);
+
+      if (role) {
+        setAuthToken(token);
+        setUserRole(role);
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("userRole", role);
+      }
+    } catch (error) {
+      console.error("Invalid token on login:", error);
     }
   };
 
@@ -60,6 +87,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Failed to clear Appwrite session:", error.message);
     }
+
     localStorage.removeItem("token");
     localStorage.removeItem("authToken");
     localStorage.removeItem("userRole");
@@ -67,6 +95,7 @@ export const AuthProvider = ({ children }) => {
     setUserRole(null);
     setUser(null);
     setIsLoggedIn(false);
+    window.dispatchEvent(new Event("storage")); // ✅ Ensure header updates on logout
   };
 
   return (

@@ -102,8 +102,6 @@ const register = async (req, res) => {
   }
 };
 
-
-
 //updated login code.
 
 const login = async (req, res) => {
@@ -251,13 +249,26 @@ const getAllUsers = async (req, res) => {
 
 // Fetch user by ID
 const getUserById = async (req, res) => {
+  console.log("Fetching user with ID:", req.params.id); // ✅ Log incoming request
+
   try {
+    if (!req.params.id || req.params.id.length !== 24) {
+      console.error("Invalid user ID format.");
+      return res.status(400).json({ message: "Invalid user ID format" });
+    }
+
     const user = await User.findById(req.params.id).select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!user) {
+      console.log("User not found!");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    console.log("User found:", user); // ✅ Log found user
     res.status(200).json(user);
   } catch (error) {
-    console.error("Error fetching user by ID:", error.message);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error fetching user by ID:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

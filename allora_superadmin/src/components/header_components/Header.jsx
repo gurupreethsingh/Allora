@@ -19,6 +19,10 @@ const Header = () => {
     navigate("/login");
   };
 
+  // Check if the logged-in user is an Admin or Super Admin
+  const isAdminOrSuperAdmin =
+    user?.role === "admin" || user?.role === "superadmin";
+
   return (
     <div className="flex justify-between items-center border-b px-6 py-3 bg-gray-100">
       {/* Left Navigation */}
@@ -28,16 +32,22 @@ const Header = () => {
             Home
           </Link>
         </li>
-        <li>
-          <Link className="text-dark font-semibold" to="/contact-us">
-            Contact
-          </Link>
-        </li>
-        <li>
-          <Link className="text-dark font-semibold" to="/about-us">
-            About
-          </Link>
-        </li>
+
+        {/* Only show for Admin or Super Admin */}
+        {isAdminOrSuperAdmin && (
+          <>
+            <li>
+              <Link className="text-dark font-semibold" to="/all-users">
+                All Users
+              </Link>
+            </li>
+            <li>
+              <Link className="text-dark font-semibold" to="/add-blog">
+                Add Blog
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
 
       {/* Right Navigation */}

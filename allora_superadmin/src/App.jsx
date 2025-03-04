@@ -13,9 +13,8 @@ import PrivateRoutes from "./components/auth_components/PrivateRoutes";
 
 import Homepage from "./pages/common_pages/Homepage";
 import Header from "./components/header_components/Header";
-import Footer from "./components/header_components/Footer";
+import Footer from "./components/footer_components/Footer";
 import PageNotFound from "./pages/common_pages/PageNotFound";
-import ContactUs from "./pages/contact_pages/ContactUs";
 import TopHeader from "./components/header_components/TopHeader";
 
 // dashboard pages for all users
@@ -25,7 +24,6 @@ import EmployeeDashboard from "./pages/employee_pages/EmployeeDashboard";
 import OutletDashboard from "./pages/outletpages/OutletDashboard";
 import VendorDashboard from "./pages/vendor_pages/VendorDashboard";
 import DeliveryPersonDashboard from "./pages/delivery_person_pages/DeliveryPersonDashboard";
-import AboutUs from "./pages/common_pages/AboutUs";
 
 // user pages.
 import Login from "./pages/user_pages/Login";
@@ -43,8 +41,11 @@ import AllMessages from "./pages/contact_pages/AllMessages";
 import ReplyMessage from "./pages/contact_pages/ReplyMessage";
 import AllReplies from "./pages/contact_pages/AllReplies";
 
-// blog pages. 
+// blog pages.
 import AddBlog from "./pages/blog_pages/AddBlog";
+
+// subscription page.
+import Subscriptions from "./pages/subscription_pages/Subscriptions";
 
 // ✅ Function to dynamically update the page title based on the current route
 const TitleUpdater = () => {
@@ -54,8 +55,6 @@ const TitleUpdater = () => {
     const getPageTitle = (pathname) => {
       if (pathname === "/" || pathname === "/home" || pathname === "/homepage")
         return "Homepage";
-      if (pathname === "/contact-us") return "Contact Us";
-      if (pathname === "/about-us") return "About Us";
       if (pathname === "/register") return "Register";
       if (pathname === "/login") return "Login";
       if (pathname.startsWith("/user-dashboard/")) return "User Dashboard";
@@ -68,15 +67,16 @@ const TitleUpdater = () => {
       if (pathname.startsWith("/vendor-dashboard/")) return "Vendor Dashboard";
       if (pathname.startsWith("/delivery-dashboard/"))
         return "Delivery Dashboard";
-      if (pathname.startsWith("/forgot-password/")) return "Forgot Password";
+      if (pathname.startsWith("/forgot-password")) return "Forgot Password";
       if (pathname.startsWith("/reset-password/")) return "Reset Password";
       if (pathname.startsWith("/profile/")) return "Profile";
-      if (pathname.startsWith("/all-users/")) return "All Users";
+      if (pathname.startsWith("/all-users")) return "All Users";
       if (pathname.startsWith("/single-user/")) return "Single User";
       if (pathname.startsWith("/all-messages/")) return "All Messages";
       if (pathname.startsWith("/reply-message/")) return "Reply Message";
-      if (pathname.startsWith("/all-replies/")) return "All Replies";
-      if (pathname.startsWith("/add-blog/")) return "Add Blog";
+      if (pathname.startsWith("/all-replies")) return "All Replies";
+      if (pathname.startsWith("/add-blog")) return "Add Blog";
+      if (pathname.startsWith("/subscriptions")) return "Subscriptions";
       return "Page Not Found";
     };
 
@@ -101,8 +101,6 @@ function App() {
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/page-not-found" element={<PageNotFound />} />
           <Route path="/*" element={<PageNotFound />} />
 
@@ -251,12 +249,20 @@ function App() {
           <Route
             path="/add-blog"
             element={
-              <PrivateRoutes allowedRoles={["superadmin"]}>
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
                 <AddBlog />
               </PrivateRoutes>
             }
           />
-
+          {/* subscription page routes  */}
+          <Route
+            path="/subscriptions"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
+                <Subscriptions />
+              </PrivateRoutes>
+            }
+          />
         </Routes>
         <Footer />
       </Router>

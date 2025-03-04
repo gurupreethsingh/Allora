@@ -11,6 +11,11 @@ const blogRoutes = require("./routes/BlogRoutes");
 //import user routes.
 const userRoutes = require("./routes/UserRoutes");
 const contactRoutes = require("./routes/ContactRoutes");
+const subscriptionRoutes = require("./routes/SubscriptionRoutes");
+const categoryRoutes = require("./routes/CategoryRoutes");
+const productRoutes = require("./routes/ProductRoutes");
+const vendorRoutes = require("./routes/VendorRoutes");
+const outletRoutes = require("./routes/OutletRoutes");
 
 dotenv.config();
 const app = express();
@@ -34,6 +39,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api", userRoutes);
 app.use("/api", contactRoutes);
 app.use("/api", blogRoutes);
+app.use("/api", subscriptionRoutes);
+app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
+app.use("/api", vendorRoutes);
+app.use("/api", outletRoutes);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

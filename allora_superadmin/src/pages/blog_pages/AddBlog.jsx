@@ -19,12 +19,24 @@ export default function AddBlog() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.id) {
-      setAuthor(user.id); // Ensure this is a valid ObjectId
-    } else {
-      // Handle the case where the user is not logged in or the ID is not available
-      console.error("Invalid user ID");
+    const storedUser = localStorage.getItem("user");
+
+    try {
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user && user.id && user.id.length === 24) {
+          setAuthor(user.id);
+        } else {
+          console.error("Invalid user ID: ", user);
+          setAuthor(null);
+        }
+      } else {
+        console.error("No user found in localStorage.");
+        setAuthor(null);
+      }
+    } catch (error) {
+      console.error("Error parsing user from localStorage:", error);
+      setAuthor(null);
     }
   }, []);
 
@@ -34,10 +46,18 @@ export default function AddBlog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate author before submitting
+    if (!author || author.length !== 24) {
+      setMessage("Invalid author ID. Please log in again.");
+      console.error("Invalid author ID:", author);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
-    formData.append("author", author); // Pass the ObjectId of the author
+    formData.append("author", author); // Ensure this is a valid ObjectId
     formData.append("summary", summary);
     formData.append("tags", tags);
     formData.append("category", category);
@@ -59,7 +79,6 @@ export default function AddBlog() {
         }
       );
       setMessage("Blog added successfully!");
-      // Clear form fields
       setTitle("");
       setBody("");
       setSummary("");
@@ -70,7 +89,6 @@ export default function AddBlog() {
       setPublished(false);
       setFeaturedImage(null);
       alert("New Blog added successfully.");
-      navigate("/all-blogs");
     } catch (error) {
       console.error("There was an error adding the blog!", error);
       setMessage("Error adding blog. Please try again.");

@@ -28,9 +28,12 @@ import ResetPassword from "./pages/user_pages/ResetPassword";
 import Profile from "./pages/user_pages/Profile";
 import UpdateProfile from "./pages/user_pages/UpdateProfile";
 
-// blog pages. 
+// blog pages.
 import AllBlogs from "./pages/blog_pages/AllBlogs";
 import SingleBlog from "./pages/blog_pages/SingleBlog";
+
+// newsletter
+import NewsLetter from "./components/common_components/NewsLetter";
 
 // ✅ Function to dynamically update the page title based on the current route
 const TitleUpdater = () => {
@@ -48,7 +51,7 @@ const TitleUpdater = () => {
       if (pathname.startsWith("/forgot-password/")) return "Forgot Password";
       if (pathname.startsWith("/reset-password/")) return "Reset Password";
       if (pathname.startsWith("/profile/")) return "Profile";
-      if (pathname.startsWith("/all-blogs/")) return "All Blogs";
+      if (pathname.startsWith("/all-blogs")) return "All Blogs";
       if (pathname.startsWith("/single-blog/")) return "Single Blog";
       return "Page Not Found";
     };
@@ -77,7 +80,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/all-blogs" element={<AllBlogs />} />
-          <Route path="/single-blog" element={<SingleBlog />} />
+          <Route path="/single-blog/:id" element={<SingleBlog />} />
           <Route path="/page-not-found" element={<PageNotFound />} />
           <Route path="/*" element={<PageNotFound />} />
 
@@ -98,8 +101,6 @@ function App() {
               </PrivateRoutes>
             }
           />
-
-
 
           {/* user pages */}
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -123,8 +124,8 @@ function App() {
               </PrivateRoutes>
             }
           />
-
         </Routes>
+        <NewsLetter />
         <Footer />
       </Router>
     </AuthProvider>

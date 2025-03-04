@@ -1,36 +1,63 @@
-import React from 'react'
+import React from "react";
 
 const Header = () => {
   return (
-    <div className='flex justify-around items-center p-2'>
+    <div className="flex justify-around items-center p-2">
       <div>
-       <h1 className='text-2xl font-bold'>LOGO</h1>
+        <a className="text-2xl font-bold" href="/home">
+          LOGO
+        </a>
       </div>
 
-      <div className='flex '>
-        <input type='search' className='border  rounded-5 p-2' placeholder='search'/>
-        <ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Contact</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">About</a>
-  </li>
-</ul>
+      <div className="flex ">
+        <input
+          type="search"
+          className="border  rounded-5 p-2"
+          placeholder="search"
+        />
+        <ul className="nav justify-content-center">
+          <li className="nav-item">
+            <a
+              className="nav-link text-dark font-semibold"
+              aria-current="page"
+              href="/contact-us"
+            >
+              Contact
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark font-semibold" href="/about-us">
+              About
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className=" nav-link text-dark font-semibold" href="/all-blogs">
+              Blogs
+            </a>
+          </li>
+        </ul>
       </div>
 
       <div>
-      <ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">login</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Register</a>
-  </li>
-</ul>
+        <ul className="nav justify-content-center">
+          <li className="nav-item">
+            <a
+              className="nav-link text-dark font-semibold"
+              aria-current="page"
+              href="/login"
+            >
+              login
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-dark font-semibold" href="/register">
+              Register
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

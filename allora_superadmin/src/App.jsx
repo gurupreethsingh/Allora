@@ -21,7 +21,7 @@ import TopHeader from "./components/header_components/TopHeader";
 import SuperAdminDashboard from "./pages/superadmin_pages/SuperAdminDashboard";
 import AdminDashboard from "./pages/adminpages/AdminDashboard";
 import EmployeeDashboard from "./pages/employee_pages/EmployeeDashboard";
-import OutletDashboard from "./pages/outletpages/OutletDashboard";
+import OutletDashboard from "./pages/outlet_pages/OutletDashboard";
 import VendorDashboard from "./pages/vendor_pages/VendorDashboard";
 import DeliveryPersonDashboard from "./pages/delivery_person_pages/DeliveryPersonDashboard";
 
@@ -46,6 +46,31 @@ import AddBlog from "./pages/blog_pages/AddBlog";
 
 // subscription page.
 import Subscriptions from "./pages/subscription_pages/Subscriptions";
+
+// category pages.
+import AddCategory from "./pages/category_pages/AddCategory";
+import AllCategories from "./pages/category_pages/AllCategories";
+import SingleCategory from "./pages/category_pages/SingleCategory";
+import CategoryAllProducts from "./pages/category_pages/CategoryAllProducts";
+
+//product pages.
+import AddProduct from "./pages/product_pages/AddProduct";
+import AllAddedProducts from "./pages/product_pages/AllAddedProducts";
+import SingleAddedProduct from "./pages/product_pages/SingleAddedProduct";
+import ProductPurchaseHistory from "./pages/product_pages/ProductPurchaseHistory";
+import StockAnalysis from "./pages/product_pages/StockAnalysis";
+
+// outlet pages.
+import AddOutlet from "./pages/outlet_pages/AddOutlet";
+import AllOutlets from "./pages/outlet_pages/AllOutlets";
+import SingleOutlet from "./pages/outlet_pages/SingleOutlet";
+
+// vendor pages.
+import AddVendor from "./pages/vendor_pages/AddVendor";
+import AllVendors from "./pages/vendor_pages/AllVendors";
+import SingleVendor from "./pages/vendor_pages/SingleVendor";
+import AddRawMaterialToVendor from "./pages/vendor_pages/AddRawMaterialToVendor";
+import AllRawMaterials from "./pages/vendor_pages/AllRawMaterials";
 
 // ✅ Function to dynamically update the page title based on the current route
 const TitleUpdater = () => {
@@ -77,6 +102,20 @@ const TitleUpdater = () => {
       if (pathname.startsWith("/all-replies")) return "All Replies";
       if (pathname.startsWith("/add-blog")) return "Add Blog";
       if (pathname.startsWith("/subscriptions")) return "Subscriptions";
+      if (pathname.startsWith("/add-category")) return "Add Category";
+      if (pathname.startsWith("/all-categories")) return "All Categories";
+      if (pathname.startsWith("/single-category/")) return "Single Category";
+      if (pathname.startsWith("/add-product")) return "Add Product";
+      if (pathname.startsWith("/all-added-products"))
+        return "All Added Products";
+      if (pathname.startsWith("/single-added-product/"))
+        return "Single Added Product";
+      if (pathname.startsWith("/add-outlet")) return "Add Outlet";
+      if (pathname.startsWith("/all-outlets")) return "All Outlets";
+      if (pathname.startsWith("/single-outlet/")) return "Single Outlet";
+      if (pathname.startsWith("/add-vendor")) return "Add Vendor";
+      if (pathname.startsWith("/all-vendors")) return "All Vendors";
+      if (pathname.startsWith("/single-vendor/")) return "Single Vendor";
       return "Page Not Found";
     };
 
@@ -260,6 +299,116 @@ function App() {
             element={
               <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
                 <Subscriptions />
+              </PrivateRoutes>
+            }
+          />
+
+          {/* category routes.  */}
+          <Route
+            path="/add-category"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AddCategory />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/all-categories"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AllCategories />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/single-category/:id"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <SingleCategory />
+              </PrivateRoutes>
+            }
+          />
+
+          {/* outlet routes  */}
+          <Route
+            path="/add-outlet"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AddOutlet />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/all-outlets"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
+                <AllOutlets />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/single-outlet/:outletId"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
+                <SingleOutlet />
+              </PrivateRoutes>
+            }
+          />
+
+          {/* vendor routes.  */}
+          <Route
+            path="/add-vendor"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AddVendor />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/all-vendors"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AllVendors />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/single-vendor/:vendorId"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <SingleVendor />
+              </PrivateRoutes>
+            }
+          />
+
+          {/* product routes.  */}
+          <Route
+            path="/add-product"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AddProduct />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/all-added-products"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AllAddedProducts />
+              </PrivateRoutes>
+            }
+          />
+
+          <Route
+            path="/single-added-product/:id"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <SingleAddedProduct />
               </PrivateRoutes>
             }
           />

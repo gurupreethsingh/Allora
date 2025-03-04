@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { AuthContext } from "../../components/AuthContext";
+import { AuthContext } from "../../components/common_components/AuthContext";
 import {
   FiHome,
   FiBox,

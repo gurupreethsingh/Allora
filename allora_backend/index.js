@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken"); // For token verification
 const path = require("path");
 const fs = require("fs");
+const blogRoutes = require("./routes/BlogRoutes");
 
 //import user routes.
 const userRoutes = require("./routes/UserRoutes");
@@ -32,6 +33,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Routes
 app.use("/api", userRoutes);
 app.use("/api", contactRoutes);
+app.use("/api", blogRoutes);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

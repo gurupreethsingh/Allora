@@ -43,6 +43,9 @@ import AllMessages from "./pages/contact_pages/AllMessages";
 import ReplyMessage from "./pages/contact_pages/ReplyMessage";
 import AllReplies from "./pages/contact_pages/AllReplies";
 
+// blog pages. 
+import AddBlog from "./pages/blog_pages/AddBlog";
+
 // ✅ Function to dynamically update the page title based on the current route
 const TitleUpdater = () => {
   const location = useLocation();
@@ -73,6 +76,7 @@ const TitleUpdater = () => {
       if (pathname.startsWith("/all-messages/")) return "All Messages";
       if (pathname.startsWith("/reply-message/")) return "Reply Message";
       if (pathname.startsWith("/all-replies/")) return "All Replies";
+      if (pathname.startsWith("/add-blog/")) return "Add Blog";
       return "Page Not Found";
     };
 
@@ -220,7 +224,7 @@ function App() {
           <Route
             path="/all-messages"
             element={
-              <PrivateRoutes allowedRoles={["superadmin"]}>
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
                 <AllMessages />
               </PrivateRoutes>
             }
@@ -228,7 +232,7 @@ function App() {
           <Route
             path="/reply-message/:id"
             element={
-              <PrivateRoutes allowedRoles={["superadmin"]}>
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
                 <ReplyMessage />
               </PrivateRoutes>
             }
@@ -237,11 +241,22 @@ function App() {
           <Route
             path="/all-replies"
             element={
-              <PrivateRoutes allowedRoles={["superadmin"]}>
+              <PrivateRoutes allowedRoles={["superadmin", "admin"]}>
                 <AllReplies />
               </PrivateRoutes>
             }
           />
+
+          {/* blog page routes  */}
+          <Route
+            path="/add-blog"
+            element={
+              <PrivateRoutes allowedRoles={["superadmin"]}>
+                <AddBlog />
+              </PrivateRoutes>
+            }
+          />
+
         </Routes>
         <Footer />
       </Router>

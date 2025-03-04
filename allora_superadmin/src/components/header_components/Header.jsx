@@ -1,51 +1,18 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../common_components/AuthContext";
 import { FaUserCircle } from "react-icons/fa";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode
-import backendGlobalRoute from "../../config/config";
-import axios from "axios";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, user, logout } = useContext(AuthContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  console.log(user);
+  const timeoutRef = useRef(null);
 
+  // Ensure dropdown is closed when user logs in
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("Token not found in localStorage.");
-      return;
-    }
-
-    try {
-      const decoded = jwtDecode(token);
-      console.log("Decoded Token:", decoded);
-      fetchUserData(decoded.id);
-    } catch (error) {
-      console.error("Error decoding token:", error);
-    }
-  }, []);
-
-  const fetchUserData = async (userId) => {
-    try {
-      const response = await axios.get(
-        `${backendGlobalRoute}/api/user/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      setUser(response.data);
-      console.log("Fetched user data:", response.data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+    setDropdownOpen(false);
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
     logout();
@@ -89,30 +56,34 @@ const Header = () => {
             </li>
           </>
         ) : (
-          <div className="relative">
-            <button
-              className="flex items-center space-x-2 text-dark font-semibold"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              onMouseEnter={() => setDropdownOpen(true)}
-            >
+          <div
+            className="relative"
+            onMouseEnter={() => {
+              clearTimeout(timeoutRef.current);
+              setDropdownOpen(true);
+            }}
+            onMouseLeave={() => {
+              timeoutRef.current = setTimeout(
+                () => setDropdownOpen(false),
+                200
+              );
+            }}
+          >
+            <button className="flex items-center space-x-2 text-dark font-semibold">
               <FaUserCircle size={24} />
               <span>{user?.name || user?.email}</span>
             </button>
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-              <ul
-                className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-40"
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-              >
+              <ul className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-40">
                 <li>
-                  <a
-                    href={`/profile/${user?._id}`}
+                  <Link
+                    to={`/profile/${user?._id}`}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-200"
                   >
                     Profile
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <button

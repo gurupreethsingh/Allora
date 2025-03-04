@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import backendGlobalRoute from "../../config/config";
 
 export const AuthContext = createContext(null);
 
@@ -13,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decodedUser = jwtDecode(token);
-        setUser(decodedUser);
+        fetchUserData(decodedUser.id);
         setIsLoggedIn(true);
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -28,11 +30,27 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  const fetchUserData = async (userId) => {
+    try {
+      const response = await axios.get(
+        `${backendGlobalRoute}/api/user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setUser(response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   const login = (token) => {
     localStorage.setItem("token", token);
     try {
       const decodedUser = jwtDecode(token);
-      setUser(decodedUser);
+      fetchUserData(decodedUser.id);
       setIsLoggedIn(true);
     } catch (error) {
       console.error("Failed to decode token:", error);

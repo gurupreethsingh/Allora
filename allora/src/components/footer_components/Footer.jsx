@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      <div className="flex p-5 justify-evenly bg-gray-100">
+      <div className="flex p-5 justify-evenly bg-gray-100 flex-wrap">
         <ul className="nav flex-column ">
           <li className="nav-item">
             <a className="nav-link text-gray-800 font-bold" href="#">

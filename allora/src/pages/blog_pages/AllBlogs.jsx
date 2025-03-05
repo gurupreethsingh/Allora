@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -14,7 +13,6 @@ import {
 import { motion } from "framer-motion";
 import axios from "axios";
 import backendGlobalRoute from "../../config/config";
-
 
 export default function AllBlogs() {
   const getImageUrl = (imagePath) => {
@@ -97,7 +95,9 @@ export default function AllBlogs() {
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Blogs</h2>
+        <h2 className="text-2xl font-bold text-cyan-700 hover:text-cyan-800">
+          Blogs
+        </h2>
         <div className="flex space-x-4 items-center">
           <input
             type="text"

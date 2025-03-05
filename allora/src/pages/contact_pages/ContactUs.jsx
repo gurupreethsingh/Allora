@@ -79,7 +79,8 @@ const ContactUs = () => {
       <div className="flex flex-col md:flex-row justify-between items-center w-full md:w-5/6 mx-auto pt-5 pb-5 gap-10">
         {/* Contact Form Section */}
         <div className="w-full md:w-1/2 p-5  rounded-lg">
-          <h2 className="text-xl font-bold text-red-500 mb-3">Contact Us</h2>
+          <h2 className="text-xl font-bold text-cyan-700 mb-3">Contact Us</h2>
+
           <p className="text-4xl text-gray-900 mb-4 font-bold ">Get In Touch</p>
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -179,7 +180,7 @@ const ContactUs = () => {
 
             <button
               type="submit"
-              className="bg-red-500 hover:bg-red-400 text-white font-medium py-2 px-6 rounded-pill transition-all duration-200"
+              className="flex-none rounded-md bg-gradient-to-r from-cyan-500 via-teal-500 to-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-cyan-600 hover:via-teal-600 hover:to-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 w-full"
             >
               Submit Form
             </button>
@@ -188,7 +189,7 @@ const ContactUs = () => {
 
         {/* Google Maps and Register Section */}
         <div className="w-full md:w-1/2 flex flex-col gap-6">
-          <p className="text-4xl font-bold text-gray-800">Visit Our Store</p>
+          <p className="text-4xl font-bold text-cyan-600">Visit Our Store</p>
           {/* Google Maps Section */}
           <div className="h-96 bg-gray-100 rounded-lg shadow-lg overflow-hidden">
             <iframe
@@ -205,19 +206,19 @@ const ContactUs = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card 1 */}
           <div className="flex justify-center items-center p-4">
-            <FaEnvelope className="text-red-500 w-16 h-16 mr-4" />
+            <FaEnvelope className="text-red-500 w-8 h-8 mr-4" />
             <p className="text-md text-gray-600">igurupreeth@gmail.com</p>
           </div>
 
           {/* Card 2 */}
           <div className="flex justify-center items-center p-4">
-            <FaPhone className="w-16 h-16 mr-4 text-gray-600" />
+            <FaPhone className="w-8 h-8 mr-4 text-gray-600" />
             <p className="text-md text-gray-600">+91 9538596766</p>
           </div>
 
           {/* Card 3 */}
           <div className="flex justify-center items-center p-4">
-            <FaMapMarkerAlt className="w-16 h-16 mr-4 text-gray-600" />
+            <FaMapMarkerAlt className="w-8 h-8 mr-4 text-gray-600" />
             <p className="text-md text-gray-600">
               <span className="font-bold text-dark">Address :</span> 3rd Floor,
               Bagalagunte, Defence Colony, Bengaluru - 560073.

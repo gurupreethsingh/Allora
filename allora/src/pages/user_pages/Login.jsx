@@ -50,10 +50,10 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-1 flex-col justify-center px-6 lg:px-8 mb-5">
+    <div className="flex flex-1 flex-col justify-center px-6 lg:px-8 mt-5 mb-5">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <MdLogin className="mx-auto h-12 w-12 text-gray-600" />
-        <h2 className="text-center text-2xl font-bold tracking-tight text-gray-600">
+        <MdLogin className="mx-auto h-12 w-12 text-gray-800" />
+        <h2 className="text-center text-2xl font-bold tracking-tight text-gray-800">
           Log in to your account
         </h2>
       </div>
@@ -111,7 +111,7 @@ export default function Login() {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-gray-200 rounded"
+            className="flex-none rounded-md bg-gradient-to-r from-cyan-500 via-teal-500 to-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:from-cyan-600 hover:via-teal-600 hover:to-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 w-full"
           >
             Sign in
           </button>
@@ -120,7 +120,7 @@ export default function Login() {
           Need an account?{" "}
           <a
             href="/register"
-            className="font-semibold text-orange-500 hover:text-black"
+            className="font-semibold text-red-600 hover:text-black"
           >
             Sign Up
           </a>

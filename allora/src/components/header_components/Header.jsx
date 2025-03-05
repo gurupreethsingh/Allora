@@ -18,7 +18,7 @@ const Header = () => {
         <ul className="nav justify-content-center">
           <li className="nav-item">
             <a
-              className="nav-link text-dark font-semibold"
+              className="nav-link text-cyan-700 hover:text-cyan-900 font-semibold hover:underline transition-all 0.5"
               aria-current="page"
               href="/contact-us"
             >
@@ -26,12 +26,18 @@ const Header = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-dark font-semibold" href="/about-us">
+            <a
+              className="nav-link text-cyan-700 hover:text-cyan-900 font-semibold hover:underline transition-all 0.5"
+              href="/about-us"
+            >
               About
             </a>
           </li>
           <li className="nav-item">
-            <a className=" nav-link text-dark font-semibold" href="/all-blogs">
+            <a
+              className="nav-link text-cyan-700 hover:text-cyan-900 font-semibold hover:underline transition-all 0.5"
+              href="/all-blogs"
+            >
               Blogs
             </a>
           </li>
@@ -42,7 +48,7 @@ const Header = () => {
         <ul className="nav justify-content-center">
           <li className="nav-item">
             <a
-              className="nav-link text-dark font-semibold"
+              className="nav-link text-cyan-700 hover:text-cyan-900 font-semibold hover:underline transition-all 0.5"
               aria-current="page"
               href="/login"
             >
@@ -50,7 +56,10 @@ const Header = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-dark font-semibold" href="/register">
+            <a
+              className="nav-link text-cyan-700 hover:text-cyan-900 font-semibold hover:underline transition-all 0.5"
+              href="/register"
+            >
               Register
             </a>
           </li>

@@ -38,7 +38,7 @@ const AboutUs = () => {
     <div className="max-w-7xl mx-auto px-6 py-12">
       {/* About Us Section */}
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-800 mb-6">
+        <h1 className="text-4xl font-semibold text-cyan-700 hover:text-cyan-800 mb-6">
           Innovating the Future with AI, ML, & Blockchain
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
@@ -52,13 +52,15 @@ const AboutUs = () => {
       {/* What We Do Section */}
       <div className="mt-12 grid md:grid-cols-3 gap-8 text-center">
         <div className="p-6 border border-gray-300 rounded-lg shadow">
-          <h3 className="text-xl font-bold text-gray-800">AI & ML Solutions</h3>
+          <h3 className="text-xl font-bold text-cyan-700 hover:text-cyan-800">
+            AI & ML Solutions
+          </h3>
           <p className="text-gray-600 mt-2">
             Predictive analytics, computer vision, NLP chatbots, and more.
           </p>
         </div>
         <div className="p-6 border border-gray-300 rounded-lg shadow">
-          <h3 className="text-xl font-bold text-gray-800">
+          <h3 className="text-xl font-bold text-cyan-700 hover:text-cyan-800">
             Blockchain Development
           </h3>
           <p className="text-gray-600 mt-2">
@@ -66,7 +68,9 @@ const AboutUs = () => {
           </p>
         </div>
         <div className="p-6 border border-gray-300 rounded-lg shadow">
-          <h3 className="text-xl font-bold text-gray-800">Custom Software</h3>
+          <h3 className="text-xl font-bold text-cyan-700 hover:text-cyan-800">
+            Custom Software
+          </h3>
           <p className="text-gray-600 mt-2">
             Scalable web & mobile applications tailored to your business needs.
           </p>
@@ -75,7 +79,9 @@ const AboutUs = () => {
 
       {/* Meet Our Team Section */}
       <div className="mt-16 text-center">
-        <h2 className="text-3xl font-bold text-gray-800">Meet Our Team</h2>
+        <h2 className="text-3xl font-bold text-cyan-700 hover:text-cyan-800">
+          Meet Our Team
+        </h2>
         <p className="text-lg text-gray-600 mt-2">
           Our team consists of industry experts dedicated to innovation.
         </p>
@@ -102,7 +108,7 @@ const AboutUs = () => {
 
       {/* Join Us Section */}
       <div className="mt-16 text-center">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-cyan-700 hover:text-cyan-800">
           Join Us in Shaping the Future!
         </h2>
         <p className="text-lg text-gray-600 mt-2">

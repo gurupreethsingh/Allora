@@ -68,7 +68,6 @@ function App() {
       <Router>
         <TitleUpdater /> {/* ✅ Ensures the title updates dynamically */}
         <ToastContainer />
-        <TopHeader />
         <Header />
         <Routes>
           {/* Public Routes */}

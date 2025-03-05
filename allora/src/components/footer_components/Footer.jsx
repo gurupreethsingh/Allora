@@ -3,39 +3,39 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      <div className="flex p-5 justify-evenly bg-gray-700">
-        <ul className="nav flex-column text-center">
+      <div className="flex p-5 justify-evenly bg-gray-100">
+        <ul className="nav flex-column ">
           <li className="nav-item">
-            <a className="nav-link text-light font-bold" href="#">
+            <a className="nav-link text-gray-800 font-bold" href="#">
               Web Links
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-light" href="/">
+            <a className="nav-link text-gray-800" href="/">
               Home
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-light" href="/contact-us">
+            <a className="nav-link text-gray-800" href="/contact-us">
               Contact
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-light" href="/about-us">
+            <a className="nav-link text-gray-800" href="/about-us">
               About Us
             </a>
           </li>
         </ul>
 
-        <ul className="nav flex-column text-center">
+        <ul className="nav flex-column ">
           <li className="nav-item">
-            <a className="nav-link text-light font-bold" href="#">
+            <a className="nav-link text-gray-800 font-bold" href="#">
               Social Links
             </a>
           </li>
           <li className="nav-item">
             <a
-              className="nav-link text-light"
+              className="nav-link text-gray-800"
               href="https://facebook.com"
               target="_blank"
             >
@@ -44,7 +44,7 @@ const Footer = () => {
           </li>
           <li className="nav-item">
             <a
-              className="nav-link text-light"
+              className="nav-link text-gray-800"
               href="https://twitter.com"
               target="_blank"
             >
@@ -53,7 +53,7 @@ const Footer = () => {
           </li>
           <li className="nav-item">
             <a
-              className="nav-link text-light"
+              className="nav-link text-gray-800"
               href="https://linkedin.com"
               target="_blank"
             >
@@ -62,26 +62,47 @@ const Footer = () => {
           </li>
         </ul>
 
-        <ul className="nav flex-column text-center">
+        <ul className="nav flex-column">
           <li className="nav-item">
-            <a className="nav-link text-light font-bold" href="#">
+            <a className="nav-link text-gray-800 font-bold" href="#">
+              Links
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-gray-800" href="#" target="_blank">
+              Privacy Policy
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-gray-800" href="#" target="_blank">
+              Return Policy
+            </a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link text-gray-800" href="#" target="_blank">
+              Terms And Conditions
+            </a>
+          </li>
+        </ul>
+
+        <ul className="nav flex-column">
+          <li className="nav-item">
+            <a className="nav-link text-gray-800 font-bold" href="#">
               Address
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-light" href="#">
+            <a className="nav-link text-gray-800" href="#">
               ECODERS - #198
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-light" href="#">
+            <a className="nav-link text-gray-800" href="#">
               Hesaraghatta Road, Bagalgunte
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link text-light disabled" aria-disabled="true">
-              Bangalore
-            </a>
+            <a className="nav-link text-gray-800">Bangalore</a>
           </li>
         </ul>
       </div>
